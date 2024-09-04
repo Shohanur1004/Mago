@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Update URL and Download File</title>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Function to update the URL and trigger file download
+            function updateUrlAndDownload() {
+                fetch('generate_random_data.php')
+                    .then(response => response.json())
+                    .then(data => {
+                        // Construct the new URL
+                        var newUrl = `${window.location.origin}/${data.part1}/${data.part2}`;
+                        
+                        // Update the URL in the address bar without reloading the page
+                        history.pushState(null, '', newUrl);
+
+                        // Fetch filename from download.php
+                        var fileRequestUrl = `download.php?file=${encodeURIComponent(data.part1)}_${encodeURIComponent(data.part2)}.zip`;
+                        fetch(fileRequestUrl)
+                            .then(response => response.json())
+                            .then(fileData => {
+                                var filename = fileData.filename;
+                                
+                                // Create a temporary link element
+                                var link = document.createElement('a');
+                                link.href = fileRequestUrl; // The URL where the file can be downloaded
+                                link.download = filename; // The filename to be used for the download
+                                
+                                // Trigger the download
+                                document.body.appendChild(link);
+                                link.click();
+                                document.body.removeChild(link);
+                            })
+                            .catch(error => console.error('Error fetching filename:', error));
+                    })
+                    .catch(error => console.error('Error fetching random data:', error));
+            }
+
+            // Call the function to update URL and trigger download
+            updateUrlAndDownload();
+        });
+    </script>
+</head>
+<body>
+    <h1>Update URL and Download File</h1>
+    <p>The URL should be updated, and the file download should start automatically.</p>
+</body>
+</html>
