@@ -1,6 +1,6 @@
 <?php
 // File path to user_logs.txt
-$filename = 'user_logs.txt';
+$filename = 'user_log.txt';
 
 // Check if the file exists
 if (file_exists($filename)) {
