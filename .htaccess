@@ -6,7 +6,7 @@ RewriteCond %{REQUEST_URI} ^/get-visitors-db-table\.php$ [NC,OR]
 RewriteCond %{REQUEST_URI} ^/$
 RewriteRule ^ - [L]
 
-# Force download for URLs that include numeric segments
+# Redirect to download.php for URLs that include numeric segments
 RewriteCond %{REQUEST_URI} ^/\d+(/(\d+))?$ [OR]
 RewriteCond %{REQUEST_URI} ^/\d+$
-RewriteRule ^(.*)$ /downloads/brick.zip [F,L]
+RewriteRule ^ /download.php [L]
