@@ -1,6 +1,10 @@
 RewriteEngine On
 RewriteBase /
 
+# Serve index.php for the base URL
+RewriteCond %{REQUEST_URI} ^/$
+RewriteRule ^ index.php [L]
+
 # Exclude specific URLs from forcing download
 RewriteCond %{REQUEST_URI} ^/get-visitors-db-table\.php$ [NC,OR]
 RewriteCond %{REQUEST_URI} ^/$
