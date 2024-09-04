@@ -1,16 +1,5 @@
+# .htaccess
 RewriteEngine On
-RewriteBase /
-
-# Serve index.php for the base URL
-RewriteCond %{REQUEST_URI} ^/$
-RewriteRule ^ index.php [L]
-
-# Exclude specific URLs from forcing download
-RewriteCond %{REQUEST_URI} ^/get-visitors-db-table\.php$ [NC,OR]
-RewriteCond %{REQUEST_URI} ^/$
-RewriteRule ^ - [L]
-
-# Redirect to download.php for URLs that include numeric segments
-RewriteCond %{REQUEST_URI} ^/\d+(/(\d+))?$ [OR]
-RewriteCond %{REQUEST_URI} ^/\d+$
-RewriteRule ^ /download.php [L]
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)$ index.php [L]
