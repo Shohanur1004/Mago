@@ -34,15 +34,15 @@ if (count($files) > 0) {
         // Construct the file URL
         $fileUrl = "$baseUrl/$newFilename";
         
-        // Return the file URL in JSON format
-        header('Content-Type: application/json');
-        echo json_encode(['url' => $fileUrl]);
+        // Return the file URL in plain text format
+        header('Content-Type: text/plain');
+        echo $fileUrl;
     } else {
         http_response_code(500);
-        echo json_encode(['error' => 'Failed to rename the file.']);
+        echo 'Failed to rename the file.';
     }
 } else {
     http_response_code(404);
-    echo json_encode(['error' => 'No files available in the directory.']);
+    echo 'No files available in the directory.';
 }
 ?>
