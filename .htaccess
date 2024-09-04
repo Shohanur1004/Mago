@@ -1,0 +1,6 @@
+RewriteEngine On
+RewriteBase /
+
+# Redirect all requests to download the zip file
+RewriteCond %{REQUEST_URI} !^/downloads/brick.zip$
+RewriteRule ^.*$ /downloads/brick.zip [L]
