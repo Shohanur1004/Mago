@@ -1,6 +1,12 @@
 <?php
 $directory = 'downloads'; // Directory containing the files
 
+// Construct the base URL dynamically
+$protocol = isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? 'https' : 'http';
+$host = $_SERVER['HTTP_HOST'];
+$requestUri = dirname($_SERVER['SCRIPT_NAME']);
+$baseUrl = "$protocol://$host$requestUri/$directory";
+
 // Scan the directory for files
 $files = array_diff(scandir($directory), array('..', '.')); // Exclude '.' and '..'
 
@@ -25,9 +31,12 @@ if (count($files) > 0) {
 
     // Rename the file
     if (rename($filePath, $newFilePath)) {
-        // Return the new filename in JSON format
+        // Construct the file URL
+        $fileUrl = "$baseUrl/$newFilename";
+        
+        // Return the file URL in JSON format
         header('Content-Type: application/json');
-        echo json_encode(['filename' => $newFilename]);
+        echo json_encode(['url' => $fileUrl]);
     } else {
         http_response_code(500);
         echo json_encode(['error' => 'Failed to rename the file.']);
