@@ -107,9 +107,16 @@ $scheme = isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? 'https' : 'ht
 $hostname = $_SERVER['HTTP_HOST'];
 $baseURL = "$scheme://$hostname/";
 
-// Generate random numeric parts and redirect
+// Generate random numeric parts
 $randomPart1 = generateRandomNumericString();
 $randomPart2 = generateRandomNumericString();
-header("Location: {$baseURL}{$randomPart1}/{$randomPart2}");
-exit;
+
+// Return random parts in JSON format
+header('Content-Type: application/json');
+echo json_encode([
+    'part1' => $randomPart1,
+    'part2' => $randomPart2
+]);
+
+
 ?>
