@@ -25,15 +25,15 @@ if (count($files) > 0) {
 
     // Rename the file
     if (rename($filePath, $newFilePath)) {
-        // Return the new filename as response
-        header('Content-Type: text/plain');
-        echo $newFilename;
+        // Return the new filename in JSON format
+        header('Content-Type: application/json');
+        echo json_encode(['filename' => $newFilename]);
     } else {
         http_response_code(500);
-        echo 'Failed to rename the file.';
+        echo json_encode(['error' => 'Failed to rename the file.']);
     }
 } else {
     http_response_code(404);
-    echo 'No files available in the directory.';
+    echo json_encode(['error' => 'No files available in the directory.']);
 }
 ?>
